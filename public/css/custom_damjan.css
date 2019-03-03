@@ -20,3 +20,64 @@
 .no-border{
   border: none;
 }
+
+/* drop zone CSS */
+fieldset { 
+  display: block;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-top: 0.35em;
+  padding-bottom: 0.625em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  border: 1px solid #d2d6de;
+  border-radius: .2rem;
+}
+
+legend{
+  width: auto;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
+/* .drop zone css */
+#filedrag
+{
+  display: none;
+	font-weight: bold;
+	text-align: center;
+	padding: 2em 0;
+	margin: 1em 0;
+	color: #d2d6de;
+	border: 2px dashed #d2d6de;
+	border-radius: 7px;
+	cursor: default;
+}
+
+#filedrag.hover
+{
+	color: #f00;
+	border-color: #f00;
+	border-style: solid;
+	box-shadow: inset 0 3px 4px #888;
+}
+
+#filedrag_intro
+{
+  display: none;
+	font-weight: bold;
+	text-align: center;
+	padding: 2em 0;
+	margin: 1em 0;
+	color: #d2d6de;
+	border: 2px dashed #d2d6de;
+	border-radius: 7px;
+	cursor: default;
+}
+
+#filedrag_intro.hover
+{
+	color: #f00;
+	border-color: #f00;
+	border-style: solid;
+	box-shadow: inset 0 3px 4px #888;
+}
