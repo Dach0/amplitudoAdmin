@@ -1,0 +1,22 @@
+.navbar-static-top{
+  line-height: 0;
+}
+
+.main-header .navbar{
+  min-height: 51px;
+}
+
+.navbar-custom-menu{
+  display: flex;
+  justify-content: end;
+}
+
+.modal input, .modal textarea{
+  border:1px solid #d2d6de;
+  border-radius: .2rem;
+  width: 100%;
+}
+
+.no-border{
+  border: none;
+}
