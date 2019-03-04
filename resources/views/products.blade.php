@@ -13,7 +13,7 @@
 <div class="container">
     {{-- Add new product modal trigger --}}
     <div class="d-flex justify-content-end">         
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewProduct">Dodaj novi produkt</button>         
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewProductModal">Dodaj novi produkt</button>         
     </div>    
 
     {{-- Data table products --}}
@@ -23,10 +23,10 @@
                         <tr>
                             <th>Id</th>
                             <th>Naziv proizvoda</th>
-                            <th>Datium unosa proizvoda</th>
-                            <th>Izmijeni</th>
-                            <th>Deaktiviraj</th>
-                            <th>Izbriši</th>
+                            <th>Datum unosa proizvoda</th>
+                            <th class="bg-success">Izmijeni</th>
+                            <th class="bg-warning">Deaktiviraj</th>
+                            <th class="bg-danger">Izbriši</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +39,7 @@
 
 {{-- Add new produt modal --}}
 
- <div class="modal fade" id="addNewProduct">
+ <div class="modal fade" id="addNewProductModal">
    <div class="modal-dialog modal-lg">
      <div class="modal-content">
        <div class="modal-header">
@@ -47,48 +47,49 @@
          <button class="close" data-dismiss="modal">&times;</button>
        </div>
        <div class="modal-body">
-         <form enctype="multipart/form-data">
+         <form method="POST" action="/admin/products" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label for="productName" class="col-form-label">Naziv proizvoda</label>
                     <input type="text" class="form-control-sm" name="productName" id="productName">          
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="productName" class="col-form-label">Product name</label>
-                    <input type="text" class="form-control-sm" name="productName" id="productNameEn">          
+                    <label for="productNameEn" class="col-form-label">Product name</label>
+                    <input type="text" class="form-control-sm" name="productNameEn" id="productNameEn">          
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label for="product-desc" class="col-form-label">Opis proizvoda</label>
-                    <textarea class="form-control" id="product-desc"></textarea>
+                    <textarea class="form-control" id="product-desc" name="product-desc"></textarea>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="product-desc" class="col-form-label">Product description</label>
-                    <textarea class="form-control" id="product-desc"></textarea>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label for="product-desc" class="col-form-label">Uvodni tekst</label>
-                    <textarea class="form-control" id="product-desc"></textarea>
-                </div>
-                <div class="col-md-6 form-group">
-                    <label for="product-desc" class="col-form-label">Introduction text</label>
-                    <textarea class="form-control" id="product-desc"></textarea>
+                    <label for="product-descEn" class="col-form-label">Product description</label>
+                    <textarea class="form-control" id="product-descEn" name="product-descEn"></textarea>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 form-group">
-                    <label for="product-desc" class="col-form-label">Tekst proizvoda</label>
-                    <textarea class="form-control" id="product-desc" rows="5"></textarea>
+                    <label for="intro-text" class="col-form-label">Uvodni tekst</label>
+                    <textarea class="form-control" id="intro-text" name="intro-text"></textarea>
                 </div>
                 <div class="col-md-6 form-group">
-                    <label for="product-desc" class="col-form-label">Product text</label>
-                    <textarea class="form-control" id="product-desc" rows="5"></textarea>
+                    <label for="intro-textEn" class="col-form-label">Introduction text</label>
+                    <textarea class="form-control" id="intro-textEn" name="intro-textEn"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="product-text" class="col-form-label">Tekst proizvoda</label>
+                    <textarea class="form-control" id="product-text" name="product-text" rows="5"></textarea>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="product-textEn" class="col-form-label">Product text</label>
+                    <textarea class="form-control" id="product-textEn" name="product-textEn" rows="5"></textarea>
                 </div>
                 <div class="w-100 d-flex justify-content-center">
                     <div>
@@ -102,10 +103,7 @@
 
             <div class="row mt-4 px-3">
                     <fieldset class="col">
-                            <legend>Upload cover fotografije</legend>
-                            
-                            <input type="hidden" id="MAX_FILE_SIZE" name="MAX_FILE_SIZE" value="300000" />
-                            
+                            <legend>Upload <b>cover</b> fotografije</legend>
                             <div>
                                 <div class="row">
                                     <div class="col-lg-9">
@@ -127,7 +125,7 @@
 
             <div class="row mt-4 px-3">
                     <fieldset class="col">
-                            <legend>Upload intro fotografije</legend>
+                            <legend>Upload <b>intro</b> fotografije</legend>
                             
                             <div>
                                 <div class="row">
@@ -158,11 +156,12 @@
                         <input type="text" class="form-control-sm" name="altTagEn" id="altTagEn">          
                     </div>
                 </div>
-
+                <button id="addNewProd-form" type="submit" hidden></button>
          </form>
        </div>
        <div class="modal-footer">
-         <button class="btn btn-primary" data-dismiss="modal">Sačuvaj</button>
+        <button class="btn btn-primary" data-dismiss="modal">Otkaži</button>
+        <label for="addNewProd-form" class="btn btn-success mb-0">Sačuvaj</label>
        </div>
      </div>
    </div>

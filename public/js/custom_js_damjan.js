@@ -1,3 +1,5 @@
+/* DRAG AND DROP */
+
 // getElementById
 function $id(id) {
 	return document.getElementById(id);
@@ -83,3 +85,13 @@ function Output(msg, elementThatFiredEvent) {
         m.setAttribute("placeholder", msg);
     }
 }
+
+/* .DRAG AND DROP */
+
+$('#addNewProductModal').on('hidden.bs.modal', function () {
+	$(this).find('form').trigger('reset');
+	$id('filename').setAttribute("placeholder", "");
+	$id('filename_intro').setAttribute("placeholder", "");
+
+})
+
