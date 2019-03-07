@@ -7,7 +7,7 @@
           <button class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form method="POST" action="/admin/products" enctype="multipart/form-data">
+          <form method="POST" action="/products" enctype="multipart/form-data">
              @csrf
              <div class="row">
                  <div class="col-md-6 form-group">
