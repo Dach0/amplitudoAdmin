@@ -10,9 +10,9 @@
                 <img src="img/amplitudo_logo.png" alt="">
             </div>
                     <div class="my-2">
-                        <input id="name" type="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus placeholder="Korisničko ime">
+                        <input id="username" type="name" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus placeholder="Korisničko ime">
                       
-                        @if ($errors->has('name') || $errors->has('password') )
+                        @if ($errors->has('username') || $errors->has('password') )
                         
                             <?php $wrongUserOrPass = 'tacno';?>
                             

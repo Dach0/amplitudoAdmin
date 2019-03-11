@@ -22,3 +22,6 @@ Route::resource('products', 'ProductsController');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin/products', 'HomeController@products');
 Route::post('/admin/products', 'HomeController@test');
+
+Route::get('/admin/userProfile', 'HomeController@userProf');
+Route::get('/admin/users', 'HomeController@viewAllUsers');

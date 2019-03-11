@@ -49,7 +49,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'user_image' => ['image', 'mimes:jpeg,png,jpg,gif','max:2048']
@@ -69,10 +71,12 @@ class RegisterController extends Controller
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('img'), $new_name);
         }
-        else $new_name = null;
+        else $new_name = "avatar.png";
 
         return User::create([
-            'name' => $data['name'],
+            'username' => $data['username'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'user_image' => $new_name,
             'email' => $data['email'],
             'password' => Hash::make($data['password'])

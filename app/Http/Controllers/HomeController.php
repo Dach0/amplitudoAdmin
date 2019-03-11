@@ -35,4 +35,14 @@ class HomeController extends Controller
     {
         dd(request()->all());
     }
+
+    public function userProf()
+    {
+        return view('users.userProfile');
+    }
+
+    public function viewAllUsers()
+    {
+        return view('users.viewAllUsers');
+    }
 }

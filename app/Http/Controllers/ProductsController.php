@@ -41,20 +41,19 @@ class ProductsController extends Controller
         $attributes = request()->validate([
             'productName' => ['required', 'min:3'],
             'productNameEn' => ['required', 'min:3'],
-            'product-desc' => [],
-            'product-descEn' => [],
-            'intro-text' => [],
-            'intro-textEn' => [],
-            'product-text' => [],
-            'product-textEn' => [],
-            'altTag' => [],
-            'altTagEn' => [],
+            'product-desc' => ['required'],
+            'product-descEn' => ['required'],
+            'intro-text' => ['required'],
+            'intro-textEn' => ['required'],
+            'product-text' => ['required'],
+            'product-textEn' => ['required'],
+            'altTag' => ['required'],
+            'altTagEn' => ['required'],
         ]);
 
         $attributes['user_id'] = auth()->id();
         $attributes['product_images_id'] = 34;
-
-          //  dd($attributes);
+    
         $product = Products::create($attributes);
 
     }

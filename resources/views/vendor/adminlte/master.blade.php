@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title_prefix', config('adminlte.title_prefix', ''))
 @yield('title', config('adminlte.title', 'AdminLTE 2'))
 @yield('title_postfix', config('adminlte.title_postfix', ''))</title>
@@ -16,7 +17,10 @@
 
     {{-- Damjan corrections --}}
     <link rel="stylesheet" href="/css/custom_damjan.css">
-    
+
+    {{-- vue css --}}
+    <link rel="stylesheet" href="/css/app.css">        
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
@@ -75,6 +79,9 @@
 @endif
 
 @yield('adminlte_js')
+
+{{-- Vue call --}}
+<script type="text/javascript" src="/js/app.js"></script>
 
 </body>
 </html>

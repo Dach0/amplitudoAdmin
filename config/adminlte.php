@@ -137,8 +137,13 @@ return [
         ],
         'PODEŠAVANjE NALOGA',
         [
-            'text' => 'Profil',
-            'url'  => 'admin/settings',
+            'text' => 'Korisnici',
+            'url'  => '/admin/users',
+            'icon' => 'users',
+        ],
+        [
+            'text' => 'Moj profil',
+            'url'  => '/admin/userProfile',
             'icon' => 'user',
         ],
         [

@@ -117,6 +117,11 @@
                      </div>
                  </div>
                  <button id="addNewProd-form" type="submit" hidden></button>
+                  <?php if ($errors->any())
+                    {
+                      dd($errors);
+                     } 
+                  ?>
           </form>
         </div>
         <div class="modal-footer">
