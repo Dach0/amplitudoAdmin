@@ -16,7 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+       // return User::latest()->paginate(10);
+
+        return User::orderBy('created_at','desc')->paginate(10);
     }
 
     /**
@@ -29,8 +31,11 @@ class UserController extends Controller
     {
         $this->validate($request,[
             'username' => 'required|max:191',
+            'first_name' => 'required|max:191',
+            'last_name' => 'required|max:191',
             'email' => 'required|string|email|max:191|unique:users',
             'password' => 'required|string|min:6',
+            'role' => 'required'
         ]);
 
         return User::create([
@@ -75,6 +80,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return ['message' => 'Korisnik je obrisan'];
     }
 }

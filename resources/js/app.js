@@ -9,8 +9,10 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import { Form, HasError, AlertError } from 'vform';
+import Swal from 'sweetalert2';
+window.Swal = Swal;
 
+import { Form, HasError, AlertError } from 'vform';
 window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
@@ -26,6 +28,15 @@ let routes = [
   const router = new VueRouter({
     routes // short for `routes: routes`
   })
+
+  Vue.filter('capitalize', function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+  })
+
+  window.Fire = new Vue();
+
 
 /**
  * The following block of code may be used to automatically register your

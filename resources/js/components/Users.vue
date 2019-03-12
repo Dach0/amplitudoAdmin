@@ -27,23 +27,25 @@
                   <th>Prezime</th>
                   <th>E-mail</th>
                   <th>Uloga</th>
-                  <th>Modifikuj</th>
+                  <th>Kreiran</th>
+                  <th align="center">Modifikuj</th>
                 </tr>
-                <tr>
-                  <td>183</td>
-                  <td>Johndoe</td>
-                  <td><img src="" alt=""></td>
-                  <td>John</td>
-                  <td>Doe</td>
-                  <td>Doe@jd.jd</td>
-                  <td><span class="label label-success">Admin</span></td>
+                <tr v-for="user in users" :key="user.id">
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.username }}</td>
+                  <td><img :src="'/img/' + user.user_image" height="30px" alt=""></td>
+                  <td>{{ user.first_name }}</td>
+                  <td>{{ user.last_name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td><span class="label label-success">{{ user.role | capitalize}}</span></td>
+                  <td>{{ user.created_at }}</td>
                   <td>
                       <a href="">
                           <i class="fa fa-edit"></i>
                       </a>
                       /
-                      <a href="">
-                          <i class="fa fa-trash"></i>
+                      <a href="#" @click="deleteUser(user.id)">
+                          <i class="fa fa-trash red"></i>
                       </a>
                   </td>
                 </tr>
@@ -113,6 +115,7 @@
                 <option value="autor">Autor</option>
             </select>
             <has-error :form="form" field="password"></has-error>
+            <has-error :form="form" field="role"></has-error>
         </div>
 
       </div>
@@ -133,6 +136,7 @@
     export default {
         data() {
             return {
+                users : {},
                 form: new Form({
                     user_image : '',
                     username : '',
@@ -145,9 +149,63 @@
             }
         },
         methods:{
+            deleteUser(id){
+              Swal.fire({
+                      title: 'Da li ste sigurni?',
+                      text: "Nećete moći da vratite obrisane podatke!",
+                      type: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Da, Obriši!'
+                    }).then((result) => {
+
+                      if (result.value) {
+                          //Send ajax request to the server
+                          this.form.delete('/api/user/'+id).then(() => {
+                              Swal.fire(
+                                'Obrisano!',
+                                'Podaci su obrisani!',
+                                'success'
+                              )
+                             Fire.$emit('AfterCreate'); 
+                          }).catch(() => {
+                            Swal.fire("Neuspješno!", "Ne[to je pošlo do đavola", "warninh");
+                          });
+                        }
+                    })
+            },
+
+            loadUsers(){
+              axios.get("/api/user").then(({data}) => (this.users = data.data))
+            },
+
             createUser(){
-                this.form.post('/api/user');
+                this.form.post('/api/user')
+                .then(() => {
+                  Fire.$emit('AfterCreate');
+  
+                  $('#addUserModal').modal('hide');
+                  $('body').removeClass('modal-open');
+                  $('.modal-backdrop').remove();
+                  
+                  Swal.fire({
+                        type: 'success',
+                        text: 'Uspješan unos u bazu',
+                        confirmButtonText : 'U redu, hvala'
+                      })
+                })
+                .catch(() => {
+                  
+                })
             }
+        },
+
+        created(){
+          this.loadUsers();
+          Fire.$on('AfterCreate', () => {
+            this.loadUsers()
+          });
         },
 
         mounted() {
