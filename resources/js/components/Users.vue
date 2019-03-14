@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="row" v-if="$gate.isAdmin()">
         <div class="col-12">
           <div class="box">
             <div class="box-header">
@@ -33,7 +33,7 @@
                 <tr v-for="user in users" :key="user.id">
                   <td>{{ user.id }}</td>
                   <td>{{ user.username }}</td>
-                  <td><img :src="'/img/' + user.user_image" height="30px" alt=""></td>
+                  <td><img :src="'/img/profile/' + user.user_image" height="30px" alt=""></td>
                   <td>{{ user.first_name }}</td>
                   <td>{{ user.last_name }}</td>
                   <td>{{ user.email }}</td>
@@ -206,14 +206,16 @@
                               )
                              Fire.$emit('AfterCreate'); 
                           }).catch(() => {
-                            Swal.fire("Neuspješno!", "Ne[to je pošlo do đavola", "warninh");
+                            Swal.fire("Neuspješno!", "Nešto je pošlo do đavola", "warning");
                           });
                         }
                     })
             },
 
             loadUsers(){
-              axios.get("/api/user").then(({data}) => (this.users = data.data))
+              if(this.$gate.isAdmin){
+                axios.get("/api/user").then(({data}) => (this.users = data.data));
+              }
             },
 
             createUser(){

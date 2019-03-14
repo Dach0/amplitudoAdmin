@@ -80,8 +80,15 @@
 
 @yield('adminlte_js')
 
+@auth
+    <script>
+        window.user = @json(auth()->user())
+    </script>
+@endauth
+
 {{-- Vue call --}}
 <script type="text/javascript" src="/js/app.js"></script>
+
 
 </body>
 </html>
