@@ -11,8 +11,8 @@
 
 <div id="app">
 
-    <!-- component matched by the route will render here -->
-   <example-component></example-component>
+    <!-- component will render here -->
+   <profile-component></profile-component>
    
 </div>
 

@@ -11,7 +11,7 @@
 
 <div id="app">
 
-    <!-- component matched by the route will render here -->
+    <!-- component will render here -->
    <users-component></users-component>
    
 </div>

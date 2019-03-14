@@ -11,7 +11,7 @@
                   <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
                   <div class="input-group-btn">
                     <button type="submit" class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                    <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addUserModal">Dodaj korisnika</button>
+                    <button class="btn btn-sm btn-primary" @click="newModal">Dodaj korisnika</button>
                   </div>
                 </div>
               </div>
@@ -40,7 +40,7 @@
                   <td><span class="label label-success">{{ user.role | capitalize}}</span></td>
                   <td>{{ user.created_at }}</td>
                   <td>
-                      <a href="">
+                      <a href="#" @click="editModal(user)">
                           <i class="fa fa-edit"></i>
                       </a>
                       /
@@ -57,17 +57,20 @@
         </div>
       </div>
 
+      <!-- MODAL -->
+
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addUserModalLabel">Novi korisnik</h5>
+        <h5 v-show="editmode" class="modal-title" id="addUserModalLabel">Ažuriraj podatke korisnika</h5>
+        <h5 v-show="!editmode" class="modal-title" id="addUserModalLabel">Novi korisnik</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
-        <form @submit.prevent="createUser">
+        <form @submit.prevent="editmode ? updateUser() : createUser()">
             <div class="modal-body">
                 <div class="form-group">
                     <!-- pogledati kako za image -->
@@ -121,7 +124,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Odustani</button>
-        <button type="submit" class="btn btn-primary">Sačuvaj</button>
+        <button v-show="editmode" type="submit" class="btn btn-success">Ažuriraj</button>
+        <button v-show="!editmode" type="submit" class="btn btn-primary">Sačuvaj</button>
       </div>
 
       </form>
@@ -134,10 +138,13 @@
 
 <script>
     export default {
+    
         data() {
             return {
+                editmode : false,
                 users : {},
                 form: new Form({
+                    id : '',
                     user_image : '',
                     username : '',
                     first_name : '',
@@ -149,6 +156,35 @@
             }
         },
         methods:{
+            updateUser(){
+              this.form.put("/api/user/"+this.form.id)
+              .then(() => {
+                //success
+                $('#addUserModal').modal('hide');
+                    Swal.fire(
+                    'Ažurirano!',
+                    'Podaci su uspješno ažurirani!',
+                    'success'
+                  )
+                  Fire.$emit('AfterCreate'); 
+              })
+              .catch(() => {
+                console.log('Nesto nije dobrooo');
+              });
+
+            },
+              editModal(user){
+              this.editmode = true;
+              this.form.reset();
+              $('#addUserModal').modal('show');
+              this.form.fill(user);
+            },
+              newModal(){
+              this.editmode = false;
+              this.form.reset();
+              $('#addUserModal').modal('show');
+            },
+
             deleteUser(id){
               Swal.fire({
                       title: 'Da li ste sigurni?',

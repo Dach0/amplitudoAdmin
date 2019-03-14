@@ -134,6 +134,7 @@ return [
             'icon'        => 'briefcase',
             'label'       => 4,
             'label_color' => 'success',
+            'can' => 'isAdmin'
         ],
         'PODEŠAVANjE NALOGA',
         [
