@@ -109,49 +109,34 @@ return [
 
     'menu' => [
         'GLAVNI MENI',
-        [
-            'text'        => 'Proizvodi',
-            'url'         => 'admin/products',
-            'icon'        => 'dropbox',
-        ],
-        [
-            'text'        => 'Blog',
-            'url'         => 'admin/blog',
-            'icon'        => 'edit',
-            // 'label'       => 4,
-            // 'label_color' => 'success',
-        ],
-        [
-            'text'        => 'Kompanija',
-            'url'         => 'admin/company',
-            'icon'        => 'building',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        [
-            'text'        => 'Karijera',
-            'url'         => 'admin/career',
-            'icon'        => 'briefcase',
-            'label'       => 4,
-            'label_color' => 'success',
-            'can' => 'isAdmin'
-        ],
-        'PODEŠAVANjE NALOGA',
-        [
-            'text' => 'Korisnici',
-            'url'  => '/admin/users',
-            'icon' => 'users',
-        ],
-        [
-            'text' => 'Moj profil',
-            'url'  => '/admin/userProfile',
-            'icon' => 'user',
-        ],
-        [
-            'text' => 'Promijeni lozinku',
-            'url'  => 'admin/settings',
-            'icon' => 'lock',
-        ],
+        // [
+        //     'text'        => 'Proizvodi',
+        //     'url'         => 'admin/products',
+        //     'icon'        => 'dropbox',
+        // ],
+        // [
+        //     'text'        => 'Blog',
+        //     'url'         => 'admin/blog',
+        //     'icon'        => 'edit',
+        //     // 'label'       => 4,
+        //     // 'label_color' => 'success',
+        // ],
+        // [
+        //     'text'        => 'Kompanija',
+        //     'url'         => 'admin/company',
+        //     'icon'        => 'building',
+        //     'label'       => 4,
+        //     'label_color' => 'success',
+        // ],
+        // [
+        //     'text'        => 'Karijera',
+        //     'url'         => 'admin/career',
+        //     'icon'        => 'briefcase',
+        //     'label'       => 4,
+        //     'label_color' => 'success',
+        //     'can' => 'isAdmin'
+        // ],
+        
     ],
 
     /*

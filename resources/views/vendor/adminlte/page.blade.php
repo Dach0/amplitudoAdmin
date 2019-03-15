@@ -58,8 +58,8 @@
                     <ul class="nav navbar-nav mr-2 justify-content-center">
                         <li>
                                 <a href="#" class="align-items-center d-flex">
-                                    <img src="/img/avatar.png" width="25" class="user-image mr-1" alt="User Image">
-                                <span class="hidden-xs">{{ auth()->user()->name  }}</span>
+                                    <img src="/img/profile/{{ auth()->user()->user_image }}" width="25" class="user-image mr-1" alt="User Image" style="border-radius : 50%">
+                                <span class="hidden-xs">{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</span>
                                 </a>
                             </li>
                     </ul>

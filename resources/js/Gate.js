@@ -15,6 +15,12 @@ export default class Gate{
     isAuthor(){
         return this.user.role === 'autor';
     }
+    
+    isAdminOrAuthor(){
+        if(this.user.role === 'admin' || this.user.role === 'autor'){
+            return true;
+        }
+    }
 
 
 }

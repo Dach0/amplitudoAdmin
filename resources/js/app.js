@@ -20,6 +20,8 @@ window.Form = Form;
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 
+Vue.component('pagination', require('laravel-vue-pagination'));
+
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
@@ -70,6 +72,7 @@ Vue.component(
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('profile-component', require('./components/Profile.vue').default);
+Vue.component('not-found-component', require('./components/NotFound.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -79,5 +82,14 @@ Vue.component('profile-component', require('./components/Profile.vue').default);
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data:{
+      search: ''
+    },
+    methods: {
+      searchit(){
+        Fire.$emit('searching');
+      }
+    }
+
 });

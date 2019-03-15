@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row" v-if="$gate.isAdmin()">
+        <div class="row" v-if="$gate.isAdminOrAuthor()">
         <div class="col-12">
           <div class="box">
             <div class="box-header">
@@ -30,7 +30,7 @@
                   <th>Kreiran</th>
                   <th align="center">Modifikuj</th>
                 </tr>
-                <tr v-for="user in users" :key="user.id">
+                <tr v-for="user in users.data" :key="user.id">
                   <td>{{ user.id }}</td>
                   <td>{{ user.username }}</td>
                   <td><img :src="'/img/profile/' + user.user_image" height="30px" alt=""></td>
@@ -52,13 +52,26 @@
               </tbody></table>
             </div>
             <!-- /.box-body -->
+            
+            <!-- box footer -->
+            <div class="box-footer">
+                <pagination :data="users" @pagination-change-page="getResults"></pagination>
+            </div>
+            <!-- /. box-footer -->
+
           </div>
           <!-- /.box -->
         </div>
       </div>
 
-      <!-- MODAL -->
+<!-- 404 ako nije autorizovan -->
 
+  <div v-if="!$gate.isAdminOrAuthor()">
+    <not-found-component></not-found-component>
+  </div>
+
+
+      <!-- MODAL -->
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -156,6 +169,12 @@
             }
         },
         methods:{
+            getResults(page = 1) {
+              axios.get('/api/user?page=' + page)
+                .then(response => {
+                  this.users = response.data;
+                  });
+            },
             updateUser(){
               this.form.put("/api/user/"+this.form.id)
               .then(() => {
@@ -213,8 +232,8 @@
             },
 
             loadUsers(){
-              if(this.$gate.isAdmin){
-                axios.get("/api/user").then(({data}) => (this.users = data.data));
+              if(this.$gate.isAdminOrAuthor()){
+                axios.get("/api/user").then(({data}) => (this.users = data));
               }
             },
 
@@ -240,7 +259,19 @@
         },
 
         created(){
+          Fire.$on('searching', () =>{
+            let query = this.$parent.search;
+            axios.get('/api/findUser?q=' + query)
+            .then((data) => {
+              this.users = data.data;
+            })
+            .catch(() => {
+
+            })
+          });
+          
           this.loadUsers();
+          
           Fire.$on('AfterCreate', () => {
             this.loadUsers()
           });

@@ -28,8 +28,14 @@ class UserController extends Controller
     public function index()
     {
        // return User::latest()->paginate(10);
+       // $this->authorize('isAdmin');
+     
+       if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor') ) {
+           
+           return User::orderBy('created_at','desc')->paginate(5);
+  
+        }
 
-        return User::orderBy('created_at','desc')->paginate(10);
     }
 
     /**
@@ -156,5 +162,23 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'Korisnik je obrisan'];
+    }
+
+    public function search()
+    {
+        $bindings = "";
+        if ($search = \Request::get('q')) {
+            $users = User::get();
+            $users = User::where(function($query) use ($search){
+                $query->where('username','LIKE',"%$search%")
+                        ->orWhere('first_name','LIKE',"%$search%")
+                        ->orWhere('last_name','LIKE',"%$search%")
+                        ->orWhere('email','LIKE',"%$search%")
+                        ->orWhere('role','LIKE',"%$search%");
+            })->paginate(10);
+        } else {
+            return User::orderBy('created_at','desc')->paginate(5);
+        }
+        return $users;
     }
 }
