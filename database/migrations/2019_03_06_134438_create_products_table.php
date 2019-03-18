@@ -16,15 +16,16 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('product_images_id');
+            $table->string('introImage');
+            $table->string('coverImage');
             $table->string('productName');
             $table->string('productNameEn');
-            $table->text('product-desc');
-            $table->text('product-descEn');
-            $table->text('intro-text');
-            $table->text('intro-textEn');
-            $table->text('product-text');
-            $table->text('product-textEn');
+            $table->text('productDesc');
+            $table->text('productDescEn');
+            $table->text('introText');
+            $table->text('introTextEn');
+            $table->text('productText');
+            $table->text('productTextEn');
             $table->string('altTag');
             $table->string('altTagEn');
             $table->boolean('active')->default(true);

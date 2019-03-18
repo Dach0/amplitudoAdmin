@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
             $event->menu->add([
                 'text'        => 'Proizvodi',
                 'url'         => 'admin/products',
-                'icon'        => 'dropbox',
+                'icon'        => 'box-open',
             ],
             [
                 'text'        => 'Blog',

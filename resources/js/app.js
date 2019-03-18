@@ -73,6 +73,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('users-component', require('./components/Users.vue').default);
 Vue.component('profile-component', require('./components/Profile.vue').default);
 Vue.component('not-found-component', require('./components/NotFound.vue').default);
+Vue.component('product-component', require('./components/Products.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

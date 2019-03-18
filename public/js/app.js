@@ -1849,6 +1849,592 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Products.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Products.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var Errors =
+/*#__PURE__*/
+function () {
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.errors = {};
+  }
+
+  _createClass(Errors, [{
+    key: "get",
+    value: function get(field) {
+      if (this.errors[field]) {
+        return this.errors[field][0];
+      }
+    }
+  }, {
+    key: "record",
+    value: function record(errors) {
+      this.errors = errors.errors;
+    }
+  }]);
+
+  return Errors;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      productName: "",
+      productNameEn: "",
+      productDesc: "",
+      productDescEn: "",
+      introText: "",
+      introTextEn: "",
+      productText: "",
+      productTextEn: "",
+      cover_image: '',
+      intro_image: "",
+      altTag: "",
+      altTagEn: "",
+      isDragging: false,
+      dragCount: 0,
+      isDraggingVideo: false,
+      dragCountVideo: 0,
+      isDraggingCoverImg: false,
+      dragCountCoverImg: 0,
+      isDraggingIntroImg: false,
+      dragCountIntroImg: 0,
+      files: [],
+      images: [],
+      video: [],
+      coverImgName: '',
+      introImgName: '',
+      errors: new Errors()
+    };
+  },
+  methods: {
+    addNewProduct: function addNewProduct() {
+      var _this = this;
+
+      var formData = new FormData();
+      this.files.forEach(function (file) {
+        formData.append('images[]', file, file.name);
+      });
+      formData.append('productName', this.productName);
+      formData.append('productNameEn', this.productNameEn);
+      formData.append('productDesc', this.productDesc);
+      formData.append('productDescEn', this.productDescEn);
+      formData.append('introText', this.introText);
+      formData.append('introTextEn', this.introTextEn);
+      formData.append('productText', this.productText);
+      formData.append('productTextEn', this.productTextEn);
+      formData.append('cover_image', this.cover_image);
+      formData.append('intro_image', this.intro_image);
+      formData.append('altTag', this.altTag);
+      formData.append('altTagEn', this.altTagEn);
+      axios.post('/api/product', formData).then(function () {
+        Swal.fire({
+          type: 'success',
+          text: 'Uspješan unos u bazu',
+          confirmButtonText: 'U redu, hvala'
+        });
+      }).catch(function (error) {
+        return _this.errors.record(error.response.data);
+      }); //    stari nacin sa dva poziva
+      //     this.form.post('/api/product')
+      //                 .then((response) => {
+      //                     const formData = new FormData();
+      //                     this.files.forEach(file => {
+      //                         formData.append('images[]', file, file.name);
+      //                     });
+      //                     formData.append('products_id', response.data);
+      //                     axios.post('/images-upload', formData)
+      //                     .then(response => {
+      //                                 this.images=[];
+      //                                 this.files=[];
+      //                     })
+      //                     .catch(error => this.errors.record(error.response.data));
+      //                     Fire.$emit('DBinsertSuccessful');
+      //                 //   $('#addUserModal').modal('hide');
+      //                 //   $('body').removeClass('modal-open');
+      //                 //   $('.modal-backdrop').remove();
+      //                 Swal.fire({
+      //                         type: 'success',
+      //                         text: 'Uspješan unos u bazu',
+      //                         confirmButtonText : 'U redu, hvala'
+      //                     })
+      //                 })
+      //                 .catch(() => {
+      //                 })
+    },
+    OnDragEnter: function OnDragEnter(e) {
+      e.preventDefault();
+      this.dragCount++;
+      this.isDragging = true;
+    },
+    OnDragLeave: function OnDragLeave(e) {
+      e.preventDefault();
+      this.dragCount--;
+
+      if (this.dragCount <= 0) {
+        this.isDragging = false;
+      }
+    },
+    OnDragEnterVideo: function OnDragEnterVideo(e) {
+      e.preventDefault();
+      this.dragCountVideo++;
+      this.isDraggingVideo = true;
+    },
+    OnDragLeaveVideo: function OnDragLeaveVideo(e) {
+      e.preventDefault();
+      this.dragCountVideo--;
+
+      if (this.dragCountVideo <= 0) {
+        this.isDraggingVideo = false;
+      }
+    },
+    OnDragEnterCoverImg: function OnDragEnterCoverImg(e) {
+      e.preventDefault();
+      this.dragCountCoverImg++;
+      this.isDraggingCoverImg = true;
+    },
+    OnDragLeaveCoverImg: function OnDragLeaveCoverImg(e) {
+      e.preventDefault();
+      this.dragCountCoverImg--;
+
+      if (this.dragCountCoverImg <= 0) {
+        this.isDraggingCoverImg = false;
+      }
+    },
+    OnDragEnterIntroImg: function OnDragEnterIntroImg(e) {
+      e.preventDefault();
+      this.dragCountIntroImg++;
+      this.isDraggingIntroImg = true;
+    },
+    OnDragLeaveIntroImg: function OnDragLeaveIntroImg(e) {
+      e.preventDefault();
+      this.dragCountIntroImg--;
+
+      if (this.dragCountIntroImg <= 0) {
+        this.isDraggingIntroImg = false;
+      }
+    },
+    onImagesFileInputChange: function onImagesFileInputChange(e) {
+      var _this2 = this;
+
+      var files = e.target.files;
+      Array.from(files).forEach(function (file) {
+        return _this2.addImage(file);
+      });
+    },
+    onVideoFileInputChange: function onVideoFileInputChange() {
+      console.log('Idemo, video za upload');
+    },
+    onCoverImageInputChange: function onCoverImageInputChange(e) {
+      var _this3 = this;
+
+      var file = e.target.files[0];
+      this.coverImgName = file.name;
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+        _this3.cover_image = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    onIntroImageInputChange: function onIntroImageInputChange(e) {
+      var _this4 = this;
+
+      var file = e.target.files[0];
+      this.introImgName = file.name;
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+        _this4.intro_image = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    onDrop: function onDrop(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+      e.stopPropagation();
+      this.isDragging = false;
+      var files = e.dataTransfer.files;
+      Array.from(files).forEach(function (file) {
+        return _this5.addImage(file);
+      });
+    },
+    onDropVideo: function onDropVideo(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.isDraggingVideo = false;
+      var files = e.dataTransfer.files;
+      console.log("Drag za video radi"); // Array.from(files).forEach(file => this.addImage(file));
+    },
+    onDropCoverImg: function onDropCoverImg(e) {
+      var _this6 = this;
+
+      e.preventDefault();
+      e.stopPropagation();
+      this.isDraggingCoverImg = false;
+      var file = e.dataTransfer.files[0];
+      this.coverImgName = file.name;
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+        _this6.cover_image = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    onDropIntroImg: function onDropIntroImg(e) {
+      var _this7 = this;
+
+      e.preventDefault();
+      e.stopPropagation();
+      this.isDraggingIntroImg = false;
+      var file = e.dataTransfer.files[0];
+      this.introImgName = file.name;
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+        _this7.intro_image = reader.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    addImage: function addImage(file) {
+      var _this8 = this;
+
+      if (!file.type.match('image.*')) {
+        console.log('${file:name} is not an image');
+        return;
+      }
+
+      this.files.push(file);
+      var img = new Image(),
+          reader = new FileReader();
+
+      reader.onload = function (e) {
+        return _this8.images.push(e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  },
+  mounted: function mounted() {
+    console.log('Napravljena komponenta');
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Profile.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Profile.vue?vue&type=script&lang=js& ***!
@@ -44474,6 +45060,1088 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Products.vue?vue&type=template&id=57b394cf&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Products.vue?vue&type=template&id=57b394cf& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "box" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body table-responsive no-padding" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _c("tbody", [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("td", [_vm._v("183")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("John Doe")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("11-7-2014")]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.editModal(_vm.user)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-edit green" })]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteUser(_vm.user.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-trash red" })]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "modal fade", attrs: { id: "addNewProductModal" } },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addNewProduct($event)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "productName" }
+                        },
+                        [_vm._v("Naziv proizvoda")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productName,
+                            expression: "productName"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "productName" },
+                        domProps: { value: _vm.productName },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.productName = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("productName")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "productNameEn" }
+                        },
+                        [_vm._v("Product Name")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productNameEn,
+                            expression: "productNameEn"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "productNameEn" },
+                        domProps: { value: _vm.productNameEn },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.productNameEn = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("productNameEn")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "productDesc" }
+                        },
+                        [_vm._v("Opis proizvoda")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productDesc,
+                            expression: "productDesc"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "productDesc" },
+                        domProps: { value: _vm.productDesc },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.productDesc = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("productDesc")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "productDescEn" }
+                        },
+                        [_vm._v("Product Description")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productDescEn,
+                            expression: "productDescEn"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "productDescEn" },
+                        domProps: { value: _vm.productDescEn },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.productDescEn = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("productDescEn")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "introText" }
+                        },
+                        [_vm._v("Uvodni tekst")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.introText,
+                            expression: "introText"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "introText" },
+                        domProps: { value: _vm.introText },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.introText = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("introText")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "introTextEn" }
+                        },
+                        [_vm._v("Introduction text")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.introTextEn,
+                            expression: "introTextEn"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "introTextEn" },
+                        domProps: { value: _vm.introTextEn },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.introTextEn = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("introTextEn")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "productText" }
+                        },
+                        [_vm._v("Tekst proizvoda")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productText,
+                            expression: "productText"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "productText", rows: "5" },
+                        domProps: { value: _vm.productText },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.productText = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("productText")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "productTextEn" }
+                        },
+                        [_vm._v("Product text")]
+                      ),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productTextEn,
+                            expression: "productTextEn"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "productTextEn", rows: "5" },
+                        domProps: { value: _vm.productTextEn },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.productTextEn = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("productTextEn")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-100 d-flex justify-content-center" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "uploader",
+                            class: { dragging: _vm.isDragging },
+                            on: {
+                              dragenter: _vm.OnDragEnter,
+                              dragleave: _vm.OnDragLeave,
+                              dragover: function($event) {
+                                $event.preventDefault()
+                              },
+                              drop: _vm.onDrop
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.images.length,
+                                    expression: "images.length"
+                                  }
+                                ],
+                                staticClass: "upload-control"
+                              },
+                              [_vm._m(5)]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: !_vm.images.length,
+                                    expression: "!images.length"
+                                  }
+                                ]
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-images fa-upload-image"
+                                }),
+                                _vm._v(" "),
+                                _c("p", [_vm._v("Prevuci slike ovdje")]),
+                                _vm._v(" "),
+                                _c("div", [_vm._v("ILI")]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "file-input" }, [
+                                  _c(
+                                    "label",
+                                    {
+                                      staticClass: "uploader-label-input",
+                                      attrs: { for: "imagesFile" }
+                                    },
+                                    [_vm._v("Izaberi sliku(e)")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "uploader-label-input",
+                                    attrs: {
+                                      type: "file",
+                                      id: "imagesFile",
+                                      multiple: ""
+                                    },
+                                    on: { change: _vm.onImagesFileInputChange }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "invalide-feedback text-danger"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(_vm.errors.get("images")) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.images.length,
+                                    expression: "images.length"
+                                  }
+                                ],
+                                staticClass: "images-preview"
+                              },
+                              _vm._l(_vm.images, function(image, index) {
+                                return _c(
+                                  "div",
+                                  { key: index, staticClass: "img-wrapper" },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: image,
+                                        alt: "Image Uploader ${index}"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "details" }, [
+                                      _c("span", {
+                                        staticClass: "name",
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.files[index].name
+                                          )
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("span", {
+                                        staticClass: "size",
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.files[index].size
+                                          )
+                                        }
+                                      })
+                                    ])
+                                  ]
+                                )
+                              }),
+                              0
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "w-50 d-flex justify-content-center mt-2 mx-auto"
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "uploader",
+                            class: { dragging: _vm.isDraggingVideo },
+                            on: {
+                              dragenter: _vm.OnDragEnterVideo,
+                              dragleave: _vm.OnDragLeaveVideo,
+                              dragover: function($event) {
+                                $event.preventDefault()
+                              },
+                              drop: _vm.onDropVideo
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fas fa-video fa-upload-image"
+                            }),
+                            _vm._v(" "),
+                            _c("p", [_vm._v("Prevuci video ovdje")]),
+                            _vm._v(" "),
+                            _c("div", [_vm._v("ILI")]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "file-input" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "uploader-label-input",
+                                  attrs: { for: "videoFile" }
+                                },
+                                [_vm._v("Izaberi video")]
+                              ),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "uploader-label-input",
+                                attrs: { type: "file", id: "videoFile" },
+                                on: { change: _vm.onVideoFileInputChange }
+                              })
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "w-100 d-flex justify-content-center fieldset mt-4"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "uploader w-75",
+                          class: { dragging: _vm.isDraggingCoverImg },
+                          on: {
+                            dragenter: _vm.OnDragEnterCoverImg,
+                            dragleave: _vm.OnDragLeaveCoverImg,
+                            dragover: function($event) {
+                              $event.preventDefault()
+                            },
+                            drop: _vm.onDropCoverImg
+                          }
+                        },
+                        [
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-images fa-upload-image"
+                          }),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Prevuci sliku ovdje")]),
+                          _vm._v(" "),
+                          _c("div", [_vm._v("ILI")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "file-input" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "uploader-label-input",
+                                attrs: { for: "coverImgFile" }
+                              },
+                              [_vm._v("Izaberi sliku")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "uploader-label-input",
+                              attrs: { type: "file", id: "coverImgFile" },
+                              on: { change: _vm.onCoverImageInputChange }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.coverImgName,
+                                  expression: "coverImgName"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "coverImgName",
+                                readonly: ""
+                              },
+                              domProps: { value: _vm.coverImgName },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.coverImgName = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "invalide-feedback text-danger" },
+                              [
+                                _vm._v(
+                                  "\n                                            " +
+                                    _vm._s(_vm.errors.get("cover_image")) +
+                                    "\n                                        "
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "w-100 d-flex justify-content-center fieldset mt-4"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "uploader w-75",
+                          class: { dragging: _vm.isDraggingIntroImg },
+                          on: {
+                            dragenter: _vm.OnDragEnterIntroImg,
+                            dragleave: _vm.OnDragLeaveIntroImg,
+                            dragover: function($event) {
+                              $event.preventDefault()
+                            },
+                            drop: _vm.onDropIntroImg
+                          }
+                        },
+                        [
+                          _vm._m(7),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-images fa-upload-image"
+                          }),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Prevuci sliku ovdje")]),
+                          _vm._v(" "),
+                          _c("div", [_vm._v("ILI")]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "file-input" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "uploader-label-input",
+                                attrs: { for: "introImgFile" }
+                              },
+                              [_vm._v("Izaberi sliku")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              staticClass: "uploader-label-input",
+                              attrs: { type: "file", id: "introImgFile" },
+                              on: { change: _vm.onIntroImageInputChange }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.introImgName,
+                                  expression: "introImgName"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "introImgName",
+                                readonly: ""
+                              },
+                              domProps: { value: _vm.introImgName },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.introImgName = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "invalide-feedback text-danger" },
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(_vm.errors.get("intro_image")) +
+                                    "\n                                "
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-form-label",
+                          attrs: { for: "altTag" }
+                        },
+                        [_vm._v("Alt tag")]
+                      ),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.altTag,
+                            expression: "altTag"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "altTag" },
+                        domProps: { value: _vm.altTag },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.altTag = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("altTag")) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6 form-group" }, [
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.altTagEn,
+                            expression: "altTagEn"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", name: "altTagEn" },
+                        domProps: { value: _vm.altTagEn },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.altTagEn = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "invalide-feedback text-danger" },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.errors.get("altTagEn")) +
+                              "\n                        "
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("button", { attrs: { id: "addNewProduct", hidden: "" } })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(9)
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex justify-content-end" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#addNewProductModal"
+          }
+        },
+        [_vm._v("Dodaj novi proizvod")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Proizvodi")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("Id")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Naziv proizvoda")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Datum unosa proizvoda")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center" }, [_vm._v("Izmijeni")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center" }, [_vm._v("Deaktiviraj")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center" }, [_vm._v("Izbriši")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center" }, [
+      _c("span", { staticClass: "label label-warning" }, [
+        _vm._v("Deaktiviraj")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Dodaj novi proizvod")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "close", attrs: { "data-dismiss": "modal" } },
+        [_vm._v("×")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "imagesFile" } }, [
+      _c("i", { staticClass: "fas fa-plus" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("legend", [
+      _vm._v("Upload "),
+      _c("b", [_vm._v("cover")]),
+      _vm._v(" fotografije")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("legend", [
+      _vm._v("Upload "),
+      _c("b", [_vm._v("intro")]),
+      _vm._v(" fotografije")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col-form-label", attrs: { for: "altTagEn" } },
+      [
+        _vm._v("Alt tag "),
+        _c("small", { staticClass: "text-muted" }, [_vm._v("(en)")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { "data-dismiss": "modal" } },
+        [_vm._v("Otkaži")]
+      ),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "btn btn-success mb-0",
+          attrs: { for: "addNewProduct" }
+        },
+        [_vm._v("Sačuvaj")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Profile.vue?vue&type=template&id=3bd692e4&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Profile.vue?vue&type=template&id=3bd692e4& ***!
@@ -61489,6 +63157,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 Vue.component('users-component', __webpack_require__(/*! ./components/Users.vue */ "./resources/js/components/Users.vue").default);
 Vue.component('profile-component', __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue").default);
 Vue.component('not-found-component', __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue").default);
+Vue.component('product-component', __webpack_require__(/*! ./components/Products.vue */ "./resources/js/components/Products.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -61770,6 +63439,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Products.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Products.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Products_vue_vue_type_template_id_57b394cf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Products.vue?vue&type=template&id=57b394cf& */ "./resources/js/components/Products.vue?vue&type=template&id=57b394cf&");
+/* harmony import */ var _Products_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Products.vue?vue&type=script&lang=js& */ "./resources/js/components/Products.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Products_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Products_vue_vue_type_template_id_57b394cf___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Products_vue_vue_type_template_id_57b394cf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Products.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Products.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Products.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Products_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Products.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Products.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Products_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Products.vue?vue&type=template&id=57b394cf&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Products.vue?vue&type=template&id=57b394cf& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Products_vue_vue_type_template_id_57b394cf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Products.vue?vue&type=template&id=57b394cf& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Products.vue?vue&type=template&id=57b394cf&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Products_vue_vue_type_template_id_57b394cf___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Products_vue_vue_type_template_id_57b394cf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

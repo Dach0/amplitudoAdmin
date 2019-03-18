@@ -22,7 +22,7 @@
 }
 
 /* drop zone CSS */
-fieldset { 
+.fieldset { 
   display: block;
   margin-left: 2px;
   margin-right: 2px;
@@ -34,7 +34,7 @@ fieldset {
   border-radius: .2rem;
 }
 
-legend{
+.legend{
   width: auto;
   padding-left: 0.25em;
   padding-right: 0.25em;
@@ -112,4 +112,130 @@ legend{
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: .25em;
+}
+
+.label-warning{
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 75%;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: .25em;
+}
+
+.uploader{
+	position: relative;
+	width: 100%;
+	background: aliceblue;
+	padding: 20px 15px 5px 15px;
+	text-align: center;
+	border-radius: 10px;
+	border: 3px dashed darkgrey;
+	font-size: 13px;
+	box-sizing: border-box;
+	margin: auto 7px;
+}
+
+.dragging{
+	background: #fff;
+	color: aliceblue;
+	border: 3px dashed aliceblue;
+}
+
+.file-input{
+	width: 200px;
+	margin: auto;
+	height: 45px;
+	position: relative;
+}
+
+.fa-upload-image{
+	font-size: 30px !important;
+}
+.uploader-label-input{
+	background: rgb(170, 170, 170);
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 7px;
+	border-radius: 4px;
+	margin-top: 7px;
+	cursor: pointer;
+}
+
+.uploader input{
+	opacity: 0;
+	z-index: -2;
+}
+
+
+.fa-upload-image{
+	font-size: 40px;
+}
+
+.images-preview{
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 20px;
+}
+
+.img-wrapper{
+	width: 140px;
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	height: 150px;
+	justify-content: space-between;
+	background: #fff;
+	box-shadow: 5px 5px 20px gray;
+}
+
+.img-wrapper img{
+	margin-top: 2px;
+	object-fit: contain;
+	max-height: 105px;
+}
+
+.details{
+	font-size: 12px;
+	background: #fff;
+	color: black;
+	display: flex;
+	flex-direction: column;
+	align-items: self-start;
+	padding: 3px 6px;
+}
+
+.details .name{
+	overflow: hidden;
+	height: 18px;
+}
+
+.upload-control{
+	position: absolute;
+	width: 100%;
+	background: #fff;
+	top: 0;
+	left: 0;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	padding: 10px;
+	padding-bottom: 0px;
+	text-align: right;
+
+}
+
+.upload-control label{
+	background: #888;
+	border: 1px solid rgb(124, 123, 123);
+	border-radius: 3px;
+	color: #fff;
+	font-size: 14px;
+	padding: 2px 5px;
+	cursor: pointer;
 }
