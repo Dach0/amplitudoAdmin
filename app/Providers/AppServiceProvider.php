@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Events\Dispatcher;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 use App\User;
+use App\Products;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -37,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
                 'text'        => 'Proizvodi',
                 'url'         => 'admin/products',
                 'icon'        => 'box-open',
+                'label'       => Products::count(),
+                'label_color' => 'success',
+
             ],
             [
                 'text'        => 'Blog',
@@ -49,15 +53,15 @@ class AppServiceProvider extends ServiceProvider
                 'text'        => 'Kompanija',
                 'url'         => 'admin/company',
                 'icon'        => 'building',
-                'label'       => 4,
-                'label_color' => 'success',
+                // 'label'       => 4,
+                // 'label_color' => 'success',
             ],
             [
                 'text'        => 'Karijera',
                 'url'         => 'admin/career',
                 'icon'        => 'briefcase',
-                'label'       => 4,
-                'label_color' => 'success',
+                // 'label'       => 4,
+                // 'label_color' => 'success',
                 'can' => 'isAdmin'
             ],
         );
@@ -73,11 +77,6 @@ class AppServiceProvider extends ServiceProvider
                 'text' => 'Moj profil',
                 'url'  => '/admin/userProfile',
                 'icon' => 'user',
-            ],
-            [
-                'text' => 'Promijeni lozinku',
-                'url'  => 'admin/settings',
-                'icon' => 'lock',
             ]);
         });
     }

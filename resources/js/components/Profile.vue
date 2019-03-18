@@ -52,17 +52,11 @@
         <div class="col-md-12">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active p-2"><a href="#activity" data-toggle="tab" aria-expanded="true">Activity</a></li>
-              <li class="p-2"><a href="#settings" data-toggle="tab" aria-expanded="false">Settings</a></li>
+              <li class="active p-2"><a href="#settings" data-toggle="tab" aria-expanded="true">Podešavanje naloga</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane active" id="activity">
-               
-                <h3 class="p-2">Eventualno neke aktivnosti da se kasnije dodaju</h3>
-              
-              </div>
-
-              <div class="tab-pane" id="settings">
+        
+              <div class="tab-pane active" id="settings">
                 <form class="form-horizontal">
                  
                  

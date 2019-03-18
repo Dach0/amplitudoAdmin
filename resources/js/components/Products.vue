@@ -24,18 +24,18 @@
                     <th class="text-center">Deaktiviraj</th>
                     <th class="text-center">Izbriši</th>
                 </tr>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
+                <tr v-for="product in products" :key="product.id">
+                  <td> {{ product.id}} </td>
+                  <td> {{ product.productName }}</td>
+                  <td> {{ product.created_at }} </td>
                   <td class="text-center"> 
-                      <a href="#" @click="editModal(user)">
+                      <a href="#" @click="editProduct(product)">
                         <i class="fa fa-edit green"></i>
                       </a>
                   </td>
-                  <td class="text-center"><span class="label label-warning">Deaktiviraj</span></td>
+                  <td class="text-center"><span class="label" :class="product.active==0 ? 'label-warning' : 'label-success'"> {{ product.active==0 ? 'Aktiviraj' : 'Deaktiviraj' }} </span></td>
                   <td class="text-center">
-                      <a href="#" @click="deleteUser(user.id)">
+                      <a href="#" @click="deleteProduct(product.id)">
                         <i class="fa fa-trash red"></i>
                       </a>
                   </td>
@@ -311,6 +311,7 @@ class Errors{
 }
     export default {
         data : () => ({
+            products : {},
             productName : "",
             productNameEn : "",
             productDesc : "",
@@ -339,6 +340,35 @@ class Errors{
             errors: new Errors()
         }),
         methods : {
+            deleteProduct(id){
+                      Swal.fire({
+                      title: 'Da li ste sigurni?',
+                      text: "Nećete moći da vratite obrisane podatke!",
+                      type: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Da, Obriši!'
+                    }).then((result) => {
+
+                      if (result.value) {
+                          axios.delete('/api/product/'+id).then(() => {
+                              Swal.fire(
+                                'Obrisano!',
+                                'Podaci su obrisani!',
+                                'success'
+                              )
+                             Fire.$emit('DBinsertSuccessful'); 
+                          }).catch(() => {
+                            Swal.fire("Neuspješno!", "Nešto je pošlo do đavola", "warning");
+                          });
+                        }
+                    })
+
+            },
+            loadProducts(){
+                axios.get("/api/product").then(({data}) => (this.products = data.data));
+            },
             addNewProduct(){
 
                 const formData = new FormData();
@@ -366,6 +396,29 @@ class Errors{
                                     text: 'Uspješan unos u bazu',
                                     confirmButtonText : 'U redu, hvala'
                                 })
+
+                                this.productName = '';
+                                this.productNameEn = '';
+                                this.productDesc = '';
+                                this.productDescEn = '';
+                                this.introText = '';
+                                this.introTextEn = '';
+                                this.productText = '';
+                                this.productTextEn = '';
+                                this.cover_image = '';
+                                this.intro_image = '';
+                                this.altTag = '';
+                                this.altTagEn = '';
+                                this.images=[];
+                                this.files=[];
+
+                                Fire.$emit('DBinsertSuccessful');
+                               
+                                $('#addNewProductModal').modal('hide');
+                                $('body').removeClass('modal-open');
+                                $('.modal-backdrop').remove();
+
+
                         })
                         .catch((error => this.errors.record(error.response.data)));
                
@@ -530,7 +583,10 @@ class Errors{
             }
         },
         mounted() {
-            console.log('Napravljena komponenta')
+            this.loadProducts();
+            Fire.$on('DBinsertSuccessful', () => {
+            this.loadProducts();
+            });
         }
     }
 </script>

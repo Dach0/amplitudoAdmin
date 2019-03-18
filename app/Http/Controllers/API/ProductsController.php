@@ -16,11 +16,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        {
-            $products = Products::all();
-    
-            return view('products.index', compact('products'));
-        }
+        return Products::orderBy('created_at','desc')->paginate(10);
     }
 
     /**
@@ -117,6 +113,32 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //delete product images
+        $productImages = Product_images::where('products_id', $id)->get();
+        foreach ($productImages as $prodImg) {
+            $imgToDelete = public_path('img/productImgs/').$prodImg->image_name;
+            if (file_exists($imgToDelete)){
+                @unlink($imgToDelete);
+            }
+        }
+
+        
+        $product = Products::findOrFail($id);
+        
+        //delete cover img
+         $coverImageToDelete = public_path('img/').$product->coverImage;
+         if (file_exists($coverImageToDelete)) {
+             @unlink($coverImageToDelete);
+         }
+        
+        //delete intro img
+         $introImageToDelete = public_path('img/').$product->introImage;
+         if (file_exists($introImageToDelete)) {
+             @unlink($introImageToDelete);
+         }
+        
+        $product->delete();
+
+        return ['message' => 'Proizvod je obrisan'];
     }
 }
