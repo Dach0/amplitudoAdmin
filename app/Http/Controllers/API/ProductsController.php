@@ -102,7 +102,26 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Products::findOrFail($id);
+
+        $attributes = request()->validate([
+            'productName' => ['required', 'min:3'],
+            'productNameEn' => ['required', 'min:3'],
+            'productDesc' => ['required'],
+            'productDescEn' => ['required'],
+            'introText' => ['required'],
+            'introTextEn' => ['required'],
+            'productText' => ['required'],
+            'productTextEn' => ['required'],
+            'altTag' => ['required'],
+            'altTagEn' => ['required'],
+        ]);
+
+        // treba dodati update slika, to nekom prilikom kada nadjem lakši način
+
+        $product->update($attributes);
+
+        return ['message', 'Updated'];
     }
 
     /**
@@ -140,5 +159,27 @@ class ProductsController extends Controller
         $product->delete();
 
         return ['message' => 'Proizvod je obrisan'];
+    }
+
+
+    //return all images for edit modal mode
+    public function allProductImages()
+    {
+        $id = \Request::get('id');
+        return ['productImagesForEditMode' => Product_images::select('image_name')->where('products_id', $id)->get()];
+      
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        if($request->active == 0){
+            $attributes['active'] = false;
+        }else{
+            $attributes['active'] = true;
+        }
+
+        Products::findOrFail($id)->update($attributes);
+
+        return ['Updatovan' => 'pusa'];
     }
 }

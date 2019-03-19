@@ -203,6 +203,23 @@
 	max-height: 105px;
 }
 
+.img_edit_wrapper{
+	max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-height: 150px;
+    background: #fff;
+    box-shadow: 5px 5px 20px grey;
+}
+
+.img_edit_wrapper img{
+	margin-top: 2px;
+	object-fit: contain;
+	max-height: 150px;
+}
+
+
 .details{
 	font-size: 12px;
 	background: #fff;

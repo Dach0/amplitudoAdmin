@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResources(['user' => 'API\UserController']);
 
 Route::apiResources(['product' => 'API\ProductsController']);
+Route::get('all-product-images', 'API\ProductsController@allProductImages');
+Route::patch('/product/{id}/update-status', 'API\ProductsController@changeStatus');
 
 Route::get('profile', 'API\UserController@profile');
 Route::get('findUser', 'API\UserController@search');

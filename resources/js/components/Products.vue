@@ -3,7 +3,7 @@
 
      <!-- Add new product modal trigger  -->
     <div class="d-flex justify-content-end">         
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNewProductModal">Dodaj novi proizvod</button>         
+        <button class="btn btn-primary" @click="newProductModal">Dodaj novi proizvod</button>         
     </div>    
 
     <!-- Data table products  -->
@@ -29,11 +29,11 @@
                   <td> {{ product.productName }}</td>
                   <td> {{ product.created_at }} </td>
                   <td class="text-center"> 
-                      <a href="#" @click="editProduct(product)">
+                      <a href="#" @click="editProductModal(product)">
                         <i class="fa fa-edit green"></i>
                       </a>
                   </td>
-                  <td class="text-center"><span class="label" :class="product.active==0 ? 'label-warning' : 'label-success'"> {{ product.active==0 ? 'Aktiviraj' : 'Deaktiviraj' }} </span></td>
+                  <td class="text-center"><span class="label" :class="product.active==0 ? 'label-warning' : 'label-success'"  @click="product.active==0 ? activateProduct(product.id) : deactivateProduct(product.id)"> {{ product.active==0 ? 'Aktiviraj' : 'Deaktiviraj' }} </span></td>
                   <td class="text-center">
                       <a href="#" @click="deleteProduct(product.id)">
                         <i class="fa fa-trash red"></i>
@@ -55,11 +55,12 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Dodaj novi proizvod</h5>
+          <h5 v-show="!editmode" class="modal-title">Dodaj novi proizvod</h5>
+          <h5 v-show="editmode" class="modal-title">Ažuriranje proizvoda</h5>
           <button class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="addNewProduct">
+          <form @submit.prevent="editmode ? updateProduct() : addNewProduct()">
              
              <div class="row">
                  <div class="col-md-6 form-group">
@@ -150,6 +151,12 @@
                                 <label for="imagesFile"><i class="fas fa-plus"></i></label>
                             </div>
 
+                            <div v-show="editmode" class="d-flex mb-3">
+                                <div class="img_edit_wrapper" v-for="(imageName, index) in imagesNamesForEdit" :key="index">
+                                    <img :src="'/img/productImgs/'+imageName" alt="Cover Image">    
+                                 </div>
+                             </div>
+
                         <div v-show="!images.length"> 
                             <i class="fas fa-images fa-upload-image"></i>
                             <p>Prevuci slike ovdje</p>
@@ -163,6 +170,7 @@
                                 </div>
                          </div>
 
+                        
                          <div class="images-preview" v-show="images.length">
                              <div class="img-wrapper" v-for="(image, index) in images" :key="index">
                                  <img :src="image" alt="Image Uploader ${index}">
@@ -207,7 +215,10 @@
                      
                         <legend>Upload <b>cover</b> fotografije</legend>
 
-                            <i class="fas fa-images fa-upload-image"></i>
+                            <i v-show="!editmode" class="fas fa-images fa-upload-image"></i>
+                            <div v-show="editmode" class="img_edit_wrapper">
+                                <img :src="getCoverImage()" alt="Cover Image">    
+                             </div>
                             <p>Prevuci sliku ovdje</p>
                             <div>ILI</div>
                             <div class="file-input">
@@ -237,7 +248,10 @@
                      
                         <legend>Upload <b>intro</b> fotografije</legend>
 
-                            <i class="fas fa-images fa-upload-image"></i>
+                            <i v-show="!editmode" class="fas fa-images fa-upload-image"></i>
+                            <div v-show="editmode" class="img_edit_wrapper">
+                                <img  :src="getIntroImage()" alt="Intro Image">    
+                             </div>
                             <p>Prevuci sliku ovdje</p>
                             <div>ILI</div>
                             <div class="file-input">
@@ -280,7 +294,8 @@
         </div>
         <div class="modal-footer">
          <button class="btn btn-primary" data-dismiss="modal">Otkaži</button>
-         <label for="addNewProduct" class="btn btn-success mb-0">Sačuvaj</label>
+         <label v-show="!editmode" for="addNewProduct" class="btn btn-success mb-0">Sačuvaj</label>
+         <label v-show="editmode" for="addNewProduct" class="btn btn-success mb-0">Ažuriraj</label>
         </div>
       </div>
     </div>
@@ -293,6 +308,7 @@
 </template>
 
 <script>
+
 class Errors{
 
     constructor(){
@@ -311,6 +327,8 @@ class Errors{
 }
     export default {
         data : () => ({
+            id : '',
+            editmode : false,
             products : {},
             productName : "",
             productNameEn : "",
@@ -337,9 +355,133 @@ class Errors{
             video: [],
             coverImgName : '',
             introImgName : '',
+            imagesNamesForEdit : [],
             errors: new Errors()
         }),
         methods : {
+            activateProduct(id){
+                 axios.patch("/api/product/"+id+"/update-status", {'active' : 1})
+                .then(() => {
+                //success
+                $('#addNewProductModal').modal('hide');
+                  Fire.$emit('DBinsertSuccessful'); 
+              })
+              .catch(() => {
+                console.log('Nesto nije dobrooo');
+              });
+            },
+            deactivateProduct(id){
+                axios.patch("/api/product/"+id+"/update-status", {'active' : 0})
+                .then(() => {
+                //success
+                $('#addNewProductModal').modal('hide');
+                  Fire.$emit('DBinsertSuccessful'); 
+              })
+              .catch(() => {
+                console.log('Nesto nije dobrooo');
+              });
+            },
+            updateProduct(){
+
+                if(this.cover_image==undefined){
+                    this.cover_image='';
+                }
+                if(this.intro_image==undefined){
+                    this.intro_image='';
+                }
+
+                axios.patch("/api/product/"+this.id, {
+                'productName' : this.productName,
+                'productNameEn' : this.productNameEn,
+                'productDesc' : this.productDesc,
+                'productDescEn' : this.productDescEn,
+                'introText' : this.introText,
+                'introTextEn' : this.introTextEn,
+                'productText' : this.productText,
+                'productTextEn' : this.productTextEn,
+                'cover_image' : (this.cover_image.length>100)?this.cover_image:this.coverImgName,
+                'intro_image' : (this.intro_image.length>100)?this.intro_image:this.introImgName,
+                'altTag' : this.altTag,
+                'altTagEn' : this.altTagEn,
+                'productImagesList' : this.imagesNamesForEdit,
+                    })
+              .then(() => {
+                //success
+                $('#addNewProductModal').modal('hide');
+                    Swal.fire(
+                    'Ažurirano!',
+                    'Podaci su uspješno ažurirani!',
+                    'success'
+                  )
+                  Fire.$emit('DBinsertSuccessful'); 
+              })
+              .catch(() => {
+                console.log('Nesto nije dobrooo');
+              });
+            },
+            getCoverImage(){
+                let coverImage = (this.cover_image.length > 100) ? this.cover_image : "/img/"+ this.coverImgName; 
+                return coverImage;
+            },
+            getIntroImage(){
+                let introImage = (this.intro_image.length > 100) ? this.intro_image : "/img/"+ this.introImgName; 
+                return introImage;
+            },
+            imagesForEdit(productId){
+                axios.get('/api/all-product-images?id='+productId)
+                    .then((response) => {
+                      //console.log(response.data.productImagesForEditMode);
+                      response.data.productImagesForEditMode.forEach(element => {
+                          this.imagesNamesForEdit.push(element.image_name);
+                      });
+                      // console.log(this.imagesNamesForEdit);
+                       
+                    })
+            },
+            resetModal(){
+                this.productName = '';
+                this.productNameEn = '';
+                this.productDesc = '';
+                this.productDescEn = '';
+                this.introText = '';
+                this.introTextEn = '';
+                this.productText = '';
+                this.productTextEn = '';
+                this.cover_image = '';
+                this.intro_image = '';
+                this.altTag = '';
+                this.altTagEn = '';
+                this.images=[];
+                this.files=[];
+                this.coverImgName = '';
+                this.introImgName = '';
+                this.imagesNamesForEdit = [];
+            },
+            editProductModal(product){
+                this.editmode = true;
+                this.resetModal();
+                $('#addNewProductModal').modal('show');
+                this.id = product.id;
+                this.productName = product.productName;
+                this.productNameEn = product.productNameEn;
+                this.productDesc = product.productDesc;
+                this.productDescEn = product.productDescEn;
+                this.introText = product.introText;
+                this.introTextEn = product.introTextEn;
+                this.productText = product.productText;
+                this.productTextEn = product.productTextEn;
+                this.altTag = product.altTag;
+                this.altTagEn = product.altTagEn;
+                this.coverImgName = product.coverImage;
+                this.introImgName = product.introImage;
+                this.imagesForEdit(product.id);
+
+            },
+            newProductModal(){
+                this.editmode = false;
+                this.resetModal();
+                $('#addNewProductModal').modal('show');
+            },
             deleteProduct(id){
                       Swal.fire({
                       title: 'Da li ste sigurni?',
@@ -411,6 +553,8 @@ class Errors{
                                 this.altTagEn = '';
                                 this.images=[];
                                 this.files=[];
+                                this.coverImgName = '';
+                                this.introImgName = '';
 
                                 Fire.$emit('DBinsertSuccessful');
                                

@@ -2158,6 +2158,21 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Errors =
 /*#__PURE__*/
 function () {
@@ -2187,6 +2202,8 @@ function () {
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      id: '',
+      editmode: false,
       products: {},
       productName: "",
       productNameEn: "",
@@ -2213,10 +2230,126 @@ function () {
       video: [],
       coverImgName: '',
       introImgName: '',
+      imagesNamesForEdit: [],
       errors: new Errors()
     };
   },
   methods: {
+    activateProduct: function activateProduct(id) {
+      axios.patch("/api/product/" + id + "/update-status", {
+        'active': 1
+      }).then(function () {
+        //success
+        $('#addNewProductModal').modal('hide');
+        Fire.$emit('DBinsertSuccessful');
+      }).catch(function () {
+        console.log('Nesto nije dobrooo');
+      });
+    },
+    deactivateProduct: function deactivateProduct(id) {
+      axios.patch("/api/product/" + id + "/update-status", {
+        'active': 0
+      }).then(function () {
+        //success
+        $('#addNewProductModal').modal('hide');
+        Fire.$emit('DBinsertSuccessful');
+      }).catch(function () {
+        console.log('Nesto nije dobrooo');
+      });
+    },
+    updateProduct: function updateProduct() {
+      if (this.cover_image == undefined) {
+        this.cover_image = '';
+      }
+
+      if (this.intro_image == undefined) {
+        this.intro_image = '';
+      }
+
+      axios.patch("/api/product/" + this.id, {
+        'productName': this.productName,
+        'productNameEn': this.productNameEn,
+        'productDesc': this.productDesc,
+        'productDescEn': this.productDescEn,
+        'introText': this.introText,
+        'introTextEn': this.introTextEn,
+        'productText': this.productText,
+        'productTextEn': this.productTextEn,
+        'cover_image': this.cover_image.length > 100 ? this.cover_image : this.coverImgName,
+        'intro_image': this.intro_image.length > 100 ? this.intro_image : this.introImgName,
+        'altTag': this.altTag,
+        'altTagEn': this.altTagEn,
+        'productImagesList': this.imagesNamesForEdit
+      }).then(function () {
+        //success
+        $('#addNewProductModal').modal('hide');
+        Swal.fire('Ažurirano!', 'Podaci su uspješno ažurirani!', 'success');
+        Fire.$emit('DBinsertSuccessful');
+      }).catch(function () {
+        console.log('Nesto nije dobrooo');
+      });
+    },
+    getCoverImage: function getCoverImage() {
+      var coverImage = this.cover_image.length > 100 ? this.cover_image : "/img/" + this.coverImgName;
+      return coverImage;
+    },
+    getIntroImage: function getIntroImage() {
+      var introImage = this.intro_image.length > 100 ? this.intro_image : "/img/" + this.introImgName;
+      return introImage;
+    },
+    imagesForEdit: function imagesForEdit(productId) {
+      var _this = this;
+
+      axios.get('/api/all-product-images?id=' + productId).then(function (response) {
+        //console.log(response.data.productImagesForEditMode);
+        response.data.productImagesForEditMode.forEach(function (element) {
+          _this.imagesNamesForEdit.push(element.image_name);
+        }); // console.log(this.imagesNamesForEdit);
+      });
+    },
+    resetModal: function resetModal() {
+      this.productName = '';
+      this.productNameEn = '';
+      this.productDesc = '';
+      this.productDescEn = '';
+      this.introText = '';
+      this.introTextEn = '';
+      this.productText = '';
+      this.productTextEn = '';
+      this.cover_image = '';
+      this.intro_image = '';
+      this.altTag = '';
+      this.altTagEn = '';
+      this.images = [];
+      this.files = [];
+      this.coverImgName = '';
+      this.introImgName = '';
+      this.imagesNamesForEdit = [];
+    },
+    editProductModal: function editProductModal(product) {
+      this.editmode = true;
+      this.resetModal();
+      $('#addNewProductModal').modal('show');
+      this.id = product.id;
+      this.productName = product.productName;
+      this.productNameEn = product.productNameEn;
+      this.productDesc = product.productDesc;
+      this.productDescEn = product.productDescEn;
+      this.introText = product.introText;
+      this.introTextEn = product.introTextEn;
+      this.productText = product.productText;
+      this.productTextEn = product.productTextEn;
+      this.altTag = product.altTag;
+      this.altTagEn = product.altTagEn;
+      this.coverImgName = product.coverImage;
+      this.introImgName = product.introImage;
+      this.imagesForEdit(product.id);
+    },
+    newProductModal: function newProductModal() {
+      this.editmode = false;
+      this.resetModal();
+      $('#addNewProductModal').modal('show');
+    },
     deleteProduct: function deleteProduct(id) {
       Swal.fire({
         title: 'Da li ste sigurni?',
@@ -2238,15 +2371,15 @@ function () {
       });
     },
     loadProducts: function loadProducts() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/api/product").then(function (_ref) {
         var data = _ref.data;
-        return _this.products = data.data;
+        return _this2.products = data.data;
       });
     },
     addNewProduct: function addNewProduct() {
-      var _this2 = this;
+      var _this3 = this;
 
       var formData = new FormData();
       this.files.forEach(function (file) {
@@ -2270,26 +2403,28 @@ function () {
           text: 'Uspješan unos u bazu',
           confirmButtonText: 'U redu, hvala'
         });
-        _this2.productName = '';
-        _this2.productNameEn = '';
-        _this2.productDesc = '';
-        _this2.productDescEn = '';
-        _this2.introText = '';
-        _this2.introTextEn = '';
-        _this2.productText = '';
-        _this2.productTextEn = '';
-        _this2.cover_image = '';
-        _this2.intro_image = '';
-        _this2.altTag = '';
-        _this2.altTagEn = '';
-        _this2.images = [];
-        _this2.files = [];
+        _this3.productName = '';
+        _this3.productNameEn = '';
+        _this3.productDesc = '';
+        _this3.productDescEn = '';
+        _this3.introText = '';
+        _this3.introTextEn = '';
+        _this3.productText = '';
+        _this3.productTextEn = '';
+        _this3.cover_image = '';
+        _this3.intro_image = '';
+        _this3.altTag = '';
+        _this3.altTagEn = '';
+        _this3.images = [];
+        _this3.files = [];
+        _this3.coverImgName = '';
+        _this3.introImgName = '';
         Fire.$emit('DBinsertSuccessful');
         $('#addNewProductModal').modal('hide');
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
       }).catch(function (error) {
-        return _this2.errors.record(error.response.data);
+        return _this3.errors.record(error.response.data);
       }); //    stari nacin sa dva poziva
       //     this.form.post('/api/product')
       //                 .then((response) => {
@@ -2370,51 +2505,51 @@ function () {
       }
     },
     onImagesFileInputChange: function onImagesFileInputChange(e) {
-      var _this3 = this;
+      var _this4 = this;
 
       var files = e.target.files;
       Array.from(files).forEach(function (file) {
-        return _this3.addImage(file);
+        return _this4.addImage(file);
       });
     },
     onVideoFileInputChange: function onVideoFileInputChange() {
       console.log('Idemo, video za upload');
     },
     onCoverImageInputChange: function onCoverImageInputChange(e) {
-      var _this4 = this;
+      var _this5 = this;
 
       var file = e.target.files[0];
       this.coverImgName = file.name;
       var reader = new FileReader();
 
       reader.onloadend = function () {
-        _this4.cover_image = reader.result;
+        _this5.cover_image = reader.result;
       };
 
       reader.readAsDataURL(file);
     },
     onIntroImageInputChange: function onIntroImageInputChange(e) {
-      var _this5 = this;
+      var _this6 = this;
 
       var file = e.target.files[0];
       this.introImgName = file.name;
       var reader = new FileReader();
 
       reader.onloadend = function () {
-        _this5.intro_image = reader.result;
+        _this6.intro_image = reader.result;
       };
 
       reader.readAsDataURL(file);
     },
     onDrop: function onDrop(e) {
-      var _this6 = this;
+      var _this7 = this;
 
       e.preventDefault();
       e.stopPropagation();
       this.isDragging = false;
       var files = e.dataTransfer.files;
       Array.from(files).forEach(function (file) {
-        return _this6.addImage(file);
+        return _this7.addImage(file);
       });
     },
     onDropVideo: function onDropVideo(e) {
@@ -2425,7 +2560,7 @@ function () {
       console.log("Drag za video radi"); // Array.from(files).forEach(file => this.addImage(file));
     },
     onDropCoverImg: function onDropCoverImg(e) {
-      var _this7 = this;
+      var _this8 = this;
 
       e.preventDefault();
       e.stopPropagation();
@@ -2435,13 +2570,13 @@ function () {
       var reader = new FileReader();
 
       reader.onloadend = function () {
-        _this7.cover_image = reader.result;
+        _this8.cover_image = reader.result;
       };
 
       reader.readAsDataURL(file);
     },
     onDropIntroImg: function onDropIntroImg(e) {
-      var _this8 = this;
+      var _this9 = this;
 
       e.preventDefault();
       e.stopPropagation();
@@ -2451,13 +2586,13 @@ function () {
       var reader = new FileReader();
 
       reader.onloadend = function () {
-        _this8.intro_image = reader.result;
+        _this9.intro_image = reader.result;
       };
 
       reader.readAsDataURL(file);
     },
     addImage: function addImage(file) {
-      var _this9 = this;
+      var _this10 = this;
 
       if (!file.type.match('image.*')) {
         console.log('${file:name} is not an image');
@@ -2469,18 +2604,18 @@ function () {
           reader = new FileReader();
 
       reader.onload = function (e) {
-        return _this9.images.push(e.target.result);
+        return _this10.images.push(e.target.result);
       };
 
       reader.readAsDataURL(file);
     }
   },
   mounted: function mounted() {
-    var _this10 = this;
+    var _this11 = this;
 
     this.loadProducts();
     Fire.$on('DBinsertSuccessful', function () {
-      _this10.loadProducts();
+      _this11.loadProducts();
     });
   }
 });
@@ -45122,19 +45257,25 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "d-flex justify-content-end" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", on: { click: _vm.newProductModal } },
+        [_vm._v("Dodaj novi proizvod")]
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
       _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "box" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "box-body table-responsive no-padding" }, [
             _c("table", { staticClass: "table table-hover" }, [
               _c(
                 "tbody",
                 [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _vm._l(_vm.products, function(product) {
                     return _c("tr", { key: product.id }, [
@@ -45153,7 +45294,7 @@ var render = function() {
                             attrs: { href: "#" },
                             on: {
                               click: function($event) {
-                                return _vm.editProduct(product)
+                                return _vm.editProductModal(product)
                               }
                             }
                           },
@@ -45169,7 +45310,14 @@ var render = function() {
                             class:
                               product.active == 0
                                 ? "label-warning"
-                                : "label-success"
+                                : "label-success",
+                            on: {
+                              click: function($event) {
+                                product.active == 0
+                                  ? _vm.activateProduct(product.id)
+                                  : _vm.deactivateProduct(product.id)
+                              }
+                            }
                           },
                           [
                             _vm._v(
@@ -45216,7 +45364,45 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-lg" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.editmode,
+                      expression: "!editmode"
+                    }
+                  ],
+                  staticClass: "modal-title"
+                },
+                [_vm._v("Dodaj novi proizvod")]
+              ),
+              _vm._v(" "),
+              _c(
+                "h5",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.editmode,
+                      expression: "editmode"
+                    }
+                  ],
+                  staticClass: "modal-title"
+                },
+                [_vm._v("Ažuriranje proizvoda")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "close", attrs: { "data-dismiss": "modal" } },
+                [_vm._v("×")]
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -45225,7 +45411,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.addNewProduct($event)
+                      _vm.editmode ? _vm.updateProduct() : _vm.addNewProduct()
                     }
                   }
                 },
@@ -45629,7 +45815,43 @@ var render = function() {
                                 ],
                                 staticClass: "upload-control"
                               },
-                              [_vm._m(4)]
+                              [_vm._m(2)]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.editmode,
+                                    expression: "editmode"
+                                  }
+                                ],
+                                staticClass: "d-flex mb-3"
+                              },
+                              _vm._l(_vm.imagesNamesForEdit, function(
+                                imageName,
+                                index
+                              ) {
+                                return _c(
+                                  "div",
+                                  {
+                                    key: index,
+                                    staticClass: "img_edit_wrapper"
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: "/img/productImgs/" + imageName,
+                                        alt: "Cover Image"
+                                      }
+                                    })
+                                  ]
+                                )
+                              }),
+                              0
                             ),
                             _vm._v(" "),
                             _c(
@@ -45818,11 +46040,42 @@ var render = function() {
                           }
                         },
                         [
-                          _vm._m(5),
+                          _vm._m(3),
                           _vm._v(" "),
                           _c("i", {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.editmode,
+                                expression: "!editmode"
+                              }
+                            ],
                             staticClass: "fas fa-images fa-upload-image"
                           }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.editmode,
+                                  expression: "editmode"
+                                }
+                              ],
+                              staticClass: "img_edit_wrapper"
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: _vm.getCoverImage(),
+                                  alt: "Cover Image"
+                                }
+                              })
+                            ]
+                          ),
                           _vm._v(" "),
                           _c("p", [_vm._v("Prevuci sliku ovdje")]),
                           _vm._v(" "),
@@ -45911,11 +46164,42 @@ var render = function() {
                           }
                         },
                         [
-                          _vm._m(6),
+                          _vm._m(4),
                           _vm._v(" "),
                           _c("i", {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.editmode,
+                                expression: "!editmode"
+                              }
+                            ],
                             staticClass: "fas fa-images fa-upload-image"
                           }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.editmode,
+                                  expression: "editmode"
+                                }
+                              ],
+                              staticClass: "img_edit_wrapper"
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: _vm.getIntroImage(),
+                                  alt: "Intro Image"
+                                }
+                              })
+                            ]
+                          ),
                           _vm._v(" "),
                           _c("p", [_vm._v("Prevuci sliku ovdje")]),
                           _vm._v(" "),
@@ -46029,7 +46313,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6 form-group" }, [
-                      _vm._m(7),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
@@ -46072,7 +46356,50 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(8)
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { "data-dismiss": "modal" }
+                },
+                [_vm._v("Otkaži")]
+              ),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.editmode,
+                      expression: "!editmode"
+                    }
+                  ],
+                  staticClass: "btn btn-success mb-0",
+                  attrs: { for: "addNewProduct" }
+                },
+                [_vm._v("Sačuvaj")]
+              ),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.editmode,
+                      expression: "editmode"
+                    }
+                  ],
+                  staticClass: "btn btn-success mb-0",
+                  attrs: { for: "addNewProduct" }
+                },
+                [_vm._v("Ažuriraj")]
+              )
+            ])
           ])
         ])
       ]
@@ -46080,25 +46407,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex justify-content-end" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#addNewProductModal"
-          }
-        },
-        [_vm._v("Dodaj novi proizvod")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -46123,20 +46431,6 @@ var staticRenderFns = [
       _c("th", { staticClass: "text-center" }, [_vm._v("Deaktiviraj")]),
       _vm._v(" "),
       _c("th", { staticClass: "text-center" }, [_vm._v("Izbriši")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Dodaj novi proizvod")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "close", attrs: { "data-dismiss": "modal" } },
-        [_vm._v("×")]
-      )
     ])
   },
   function() {
@@ -46179,27 +46473,6 @@ var staticRenderFns = [
         _c("small", { staticClass: "text-muted" }, [_vm._v("(en)")])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { "data-dismiss": "modal" } },
-        [_vm._v("Otkaži")]
-      ),
-      _vm._v(" "),
-      _c(
-        "label",
-        {
-          staticClass: "btn btn-success mb-0",
-          attrs: { for: "addNewProduct" }
-        },
-        [_vm._v("Sačuvaj")]
-      )
-    ])
   }
 ]
 render._withStripped = true
